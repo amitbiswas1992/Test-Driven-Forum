@@ -14,10 +14,14 @@ class ThreadsTest extends TestCase
      *
      *
      */
-    public function a_user_can_browse_threads()
+    public function test_a_user_can_browse_threads()
     {
+        $thread= factory('App\Thread')->create();
         $response = $this->get('/threads');
 
-        $response->assertStatus(200);
+        $response->assertSee($thread->title);     // seted the end point title
+
+        $response->$this->get('threads/' . $thread->id);
+        $response->assertSee($thread->title);
     }
 }
